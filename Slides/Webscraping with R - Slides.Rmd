@@ -13,14 +13,13 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Inhalt
 
-> If programming is magic, then web scraping is wizardry (Mitchell 2015: vii)
+> "If programming is magic, then web scraping is wizardry" (Mitchell 2015: vii)
 
 1. Exemplarische Anwendungen
 2. Struktur des WWW
-+ HTML
-+ JavaScript
-+ API
-3. Kurzanleitung
+3. Kurzanleitung & Toolbox
 4. Rechtliche Aspekte
 5. Literatur(hinweise)
+6. "hands-on"-Übungen
 
+## Exemplarische Anwendung
