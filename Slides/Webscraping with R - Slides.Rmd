@@ -1,0 +1,26 @@
+---
+title: "Web Scraping mit R"
+subtitle: "Workshop an der Universität Hamburg"
+author: "Fabian Gülzau (HU Berlin)"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  ioslides_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Inhalt
+
+> If programming is magic, then web scraping is wizardry (Mitchell 2015: vii)
+
+1. Exemplarische Anwendungen
+2. Struktur des WWW
++ HTML
++ JavaScript
++ API
+3. Kurzanleitung
+4. Rechtliche Aspekte
+5. Literatur(hinweise)
+
