@@ -1,10 +1,11 @@
 ---
 title: "Web Scraping mit R"
-subtitle: "Workshop an der Universität Hamburg"
 author: "Fabian Gülzau (HU Berlin)"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output:
   ioslides_presentation: default
+  slidy_presentation: default
+subtitle: Workshop an der Universität Hamburg
 ---
 
 ```{r setup, include=FALSE}
@@ -13,13 +14,51 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Inhalt
 
-> "If programming is magic, then web scraping is wizardry" (Mitchell 2015: vii)
+ > "If programming is magic, then web scraping is wizardry" (Mitchell 2015: vii)
 
-1. Exemplarische Anwendungen
+1. Einleitung
 2. Struktur des WWW
 3. Kurzanleitung & Toolbox
 4. Rechtliche Aspekte
 5. Literatur(hinweise)
 6. "hands-on"-Übungen
 
-## Exemplarische Anwendung
+## Einleitung
+
+> "...something big is going on" (Salganik 2018: 2)
+
+- Übergang vom analogen zum digitalen Zeitalter
+    - Kommende Krise der empirischen Soziologie (Savage & Burrows 2007)
+    - Neue Möglichkeiten und/oder Gefahren
+    
+ > "'computational social science' (CSS) is occurring. The question is whether
+ > it happens with or without social scientists" (Heiberger & Riebling 2016: 1)
+    
+## Neue Möglichkeiten: Beispiele
+
+Exemplarische Studien:
+
+- King et al. (2013) ["How Censorship in China Allows Government Criticism but 
+Silences Collective Expression"](http://bit.ly/2E1Yjhc)
+- Budak & Watts (2015) ["Dissecting the Spirit of Gezi: Influence vs. Selection
+in the Occupy Gezi Movement"](https://www.sociologicalscience.com/articles-v2-18-370/)
+- Törnberg & Törnberg (2016) ["Combining CDA and topic modeling: Analyzing
+discursive connections between Islamophobia and anti-feminism on an online forum"](https://journals.sagepub.com/doi/abs/10.1177/0957926516634546#articleShareContainer)
+
+## Censorship in China
+
+<div style="float: left; width: 50%;">
+King et al. (2013):
+
+- **Question**: State critique vs. collective action potential
+- **Analytical strategy**: Sample posts and see whether they are censored
+- **Data**: 11 Million posts on 1,382 social media sites 
+- **Results**: Criticism is allowed, collective action isn't
+
+</div>
+
+<div style="float: right; width: 50%;">
+![Chacha: Chinese Internet Police](Figures/Chacha - Internet Police.png)
+
+
+
