@@ -26,7 +26,7 @@ Sozialforschung, Universität Hamburg
 
 **Vortrag** 
 
-Fabian Gülzau ([Website](https://fguelzau.rbind.io/), [Twitter](https://twitter.com/fabianfox))
+Fabian Gülzau, Lehrbereich Makrosoziologie, HU Berlin ([Website](https://fguelzau.rbind.io/), [Twitter](https://twitter.com/fabianfox))
 
 **Voraussetzungen**
 
