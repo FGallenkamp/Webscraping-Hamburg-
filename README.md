@@ -35,4 +35,4 @@ vorausgesetzt werden. Wer an den späteren "hands-on"-Übungen teilnehmen möcht
 sollte einen Laptop mit Internetverbindung und der aktuellen Version von [R](https://www.r-project.org/) 
 und [RStudio](https://www.rstudio.com/products/rstudio/download/) mitbringen. Als
 kurze Installationsanweisung und Einführung in R empfehle ich "R for Data Science" 
-(Wickham & Grolemund 2018). Das Buch ist kostenfrei verfügbar[(Link)](https://r4ds.had.co.nz/introduction.html#prerequisites). 
+(Wickham & Grolemund 2018). Das Buch ist kostenfrei verfügbar [(Link)](https://r4ds.had.co.nz/introduction.html#prerequisites). 
