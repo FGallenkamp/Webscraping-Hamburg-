@@ -10,9 +10,10 @@ Der Workshop hat das Ziel die Teilnehmenden in die arkane Kunst des Web Scraping
 einzuführen. Hierzu werden wir uns zunächst mit der Grundstruktur des **W**orld**W**ide
 **W**ebs auseinandersetzen, welche sich aus HTML und JavaScript zusammensetzt. 
 
-**Event**
+**Organisation**
 
-Professur für Soziologie, insb. Methoden der empirischen Sozialforschung, Universität Hamburg
+[Prof. Dr. Henning Lohmann](https://www.wiso.uni-hamburg.de/fachbereich-sozoek/professuren/lohmann/team/lohmann-henning.html) & [Cathrin Ingensiep](https://www.wiso.uni-hamburg.de/fachbereich-sozoek/professuren/lohmann/team/ingensiep-cathrin.html), Professur für Soziologie, insb. Methoden der empirischen
+Sozialforschung, Universität Hamburg
 
 **Datum/Ort**
 
@@ -20,7 +21,7 @@ Professur für Soziologie, insb. Methoden der empirischen Sozialforschung, Unive
 
 **Vortrag** 
 
-Fabian Gülzau ([website](https://fguelzau.rbind.io/), [Twitter](https://twitter.com/fabianfox))
+Fabian Gülzau ([Website](https://fguelzau.rbind.io/), [Twitter](https://twitter.com/fabianfox))
 
 **Voraussetzungen**
 
