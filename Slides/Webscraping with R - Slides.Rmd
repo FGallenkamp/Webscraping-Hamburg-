@@ -4,7 +4,6 @@ author: "Fabian Gülzau (HU Berlin)"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output:
   ioslides_presentation: default
-  slidy_presentation: default
 subtitle: Workshop an der Universität Hamburg
 ---
 
@@ -54,11 +53,37 @@ King et al. (2013):
 - **Vorgehen**: Online-Beiträge erheben und prüfen, welche zensiert werden
 - **Daten**: 11 Millionen Beiträge auf 1,382 Webseiten 
 - **Ergebnisse**: Kritische Beiträge sind erlaubt; soziale Mobilisierung nicht
-
 </div>
 
 <div style="float: right; width: 50%;">
 ![<font size="3">Chacha: Chinese Internet Police</font>](Figures/Chacha - Internet Police.png)
+</div>
+
+## Digitale Daten
+
+- positiv: big, always-on, nonreactive
+- negativ: incomplete, inaccessible, nonrepresentative, drifting, algorithmically 
+confounded, sensitive
+
+(Salganik 2018: 17-41)
+
+## Struktur des WWW
+
+<div style="float: left; width: 70%;">
+Infrastruktur des Internets meist irrelevant.
+
+Unser Browser übernimmt:
+
+- Serveranfragen
+- Darstellung von HTML, CSS und JavaScript
+
+Um Informationen gezielt abzufragen, benötigen wir allerdings knappe Kenntnisse 
+der zugrundeliegenden Technologien.
+</div>
+
+<div style="float: right; width: 30%;">
+![<font size="3">[Transatlantisches Seekabel](https://davegreer.cc/INTERNET)</font>](Figures/Hibernia Atlantic transoceanic cable landing.jpg)
+</div>
 
 
 
