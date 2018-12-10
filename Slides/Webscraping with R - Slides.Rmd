@@ -3,12 +3,14 @@ title: "Web Scraping mit R"
 author: "Fabian Gülzau (HU Berlin)"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output:
-  ioslides_presentation: default
+  slidy_presentation: default
 subtitle: Workshop an der Universität Hamburg
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+if(!require("pacman")) install.packages("pacman")
+p_load(tidyverse, knitr, httr)
 ```
 
 ## Inhalt
@@ -74,10 +76,10 @@ Infrastruktur des Internets meist irrelevant.
 
 Unser Browser übernimmt:
 
-- Serveranfragen
+- Serveranfragen (Request/Response: HTTP)
 - Darstellung von HTML, CSS und JavaScript
 
-Um Informationen gezielt abzufragen, benötigen wir allerdings knappe Kenntnisse 
+Um Informationen gezielt abzufragen, benötigen wir allerdings basale Kenntnisse 
 der zugrundeliegenden Technologien.
 </div>
 
@@ -85,5 +87,58 @@ der zugrundeliegenden Technologien.
 ![<font size="3">[Transatlantisches Seekabel](https://davegreer.cc/INTERNET)</font>](Figures/Hibernia Atlantic transoceanic cable landing.jpg)
 </div>
 
+## HTTP 
 
+**H**yper**t**ext **T**ransfer **P**rotocol 
 
+```{r}
+# Source: https://code.tutsplus.com/tutorials/http-the-protocol-every-web-developer-must-know-part-1--net-31177
+include_graphics("Figures/http-request-response.png")
+```
+
+- Übertragungsprotokoll, welches aus zwei Teilen besteht:
+
+    - Request (Client)
+    - Response (Server)
+    
+In R über verschiedene Pakete verfügbar (`httr`, `curl`).
+
+## Beispiel
+
+- `GET` request mit `httr::GET` und response des Servers
+
+```{r, echo = TRUE, eval = TRUE}
+#install.packages("httr")
+library(httr)
+response <- GET("https://www.wiso.uni-hamburg.de/fachbereich-sozoek/professuren/lohmann/team/hertel-florian.html") %>%
+  print()
+```
+
+## HTML
+
+**H**yper**t**ext **M**arkup **L**anguage
+
+- Einfacher Text mit weiteren Anweisungen (Tags, Attributes...)
+    - Wird vom Browser interpretiert und dargestellt
+    
+- Reiner HTML-Code ist über die Webentwicklungstools des Browsers verfügbar.
+
+## Beispiel
+
+Einfache Seiten über Editor/Notepad++ erstellbar:
+
+```{html, eval = FALSE, echo = TRUE}
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Workshop Web Scraping</title>
+</head>
+
+<body>
+<h1> Web Scraping mit R, Universit&auml;t Hamburg</h1>
+<p>Dieser Kurs f&uuml;hrt in das "Web Scraping" mit R ein. Er wird durch <a href="https://fguelzau.rbind.io/">Fabian G&uuml;lzau</a> geleitet.</p>
+
+</body>
+</html>
+```
