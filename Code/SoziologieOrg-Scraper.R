@@ -31,7 +31,7 @@ url <- links %>%
   paste0("http://www.studium.org/", .)
 
 # (b) I scraping allowed/prohibited?
-paths_allowed("http://www.studium.org/") # No robots.txt; heck "impressum"
+paths_allowed("http://www.studium.org/") # No robots.txt; check "impressum"
 
 
 # (2) Retrieve the html data / (3) Parse data
