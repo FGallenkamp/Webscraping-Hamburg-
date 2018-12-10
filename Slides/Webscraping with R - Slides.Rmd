@@ -100,10 +100,18 @@ include_graphics("Figures/http-request-response.png")
 
     - Request (Client)
     - Response (Server)
-    
-In R über verschiedene Pakete verfügbar (`httr`, `curl`).
 
-## Beispiel
+## HTTP
+
+- Requests erfolgen über **U**niform **R**esource **L**ocators [(URL)](https://en.wikipedia.org/wiki/URL)
+    - Teile der URL können genutzt werden, um Informationen zu extrahieren
+    
+```{r}
+# Source: https://code.tutsplus.com/tutorials/http-the-protocol-every-web-developer-must-know-part-1--net-31177
+include_graphics("Figures/http-url-structure.png")
+```
+
+## Beispiel: HTTP
 
 - `GET` request mit `httr::GET` und response des Servers
 
@@ -116,14 +124,15 @@ response <- GET("https://www.wiso.uni-hamburg.de/fachbereich-sozoek/professuren/
 
 ## HTML
 
-**H**yper**t**ext **M**arkup **L**anguage
+**H**yper**t**ext **M**arkup **L**anguage [(HTML)](https://www.w3schools.com/html/default.asp)
 
 - Einfacher Text mit weiteren Anweisungen (Tags, Attributes...)
     - Wird vom Browser interpretiert und dargestellt
     
-- Reiner HTML-Code ist über die Webentwicklungstools des Browsers verfügbar.
+- HTML-Code ist über die Webentwicklungstools des Browsers verfügbar
+    - Rechtsklick -> Element untersuchen (Firefox)
 
-## Beispiel
+## Beispiel: HTML I
 
 Einfache Seiten über Editor/Notepad++ erstellbar:
 
@@ -142,3 +151,43 @@ Einfache Seiten über Editor/Notepad++ erstellbar:
 </body>
 </html>
 ```
+
+Der Browser interpretiert den Code und zeigt eine [Internetseite](http://htmlpreview.github.io/?https://github.com/FabianFox/Webscraping-Hamburg-/blob/master/Code/HTML-Example.html) an.
+
+## Beispiel: HTML II
+
+HTML:
+
+- hat eine Baumstruktur
+- Markup-Elemente helfen uns Informationen zu lokalisieren (Relationalität)
+    - **D**ocument **O**bject **M**odel [(DOM)](https://en.wikipedia.org/wiki/Document_Object_Model)
+    - Darstellung von HTML in R (parsing)
+    
+```{r}
+# Source: https://www.wiso.uni-hamburg.de/fachbereich-sozoek/professuren/lohmann/team/hertel-florian.html
+include_graphics("Figures/TreeStructure.png")
+```
+
+## CSS
+
+**C**ascading **S**tyle **S**heet [(CSS)](https://www.w3schools.com/css/default.asp)
+
+- beinhaltet Informationen über den Stil der HTML-Seite
+- kann genutzt werden, um Informationen zu lokalisieren (CSS-Selektoren)
+
+```{r}
+# Source: https://en.wikipedia.org/wiki/Cascading_Style_Sheets
+include_graphics("Figures/CSS-Example.png")
+```
+
+## JavaScript
+
+[JavaScript](https://www.w3schools.com/js/default.asp): Programmiersprache des Internets
+
+- macht Internetseiten dynamisch
+
+```{r}
+# Source: https://pudding.cool/2018/12/3d-cities-story/
+include_graphics("Figures/JavaScript-Example.png")
+```
+Source: [The Pudding (2018)](https://pudding.cool/2018/12/3d-cities-story/)
