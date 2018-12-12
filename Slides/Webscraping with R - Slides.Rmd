@@ -10,7 +10,7 @@ subtitle: Workshop an der Universität Hamburg
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 if(!require("pacman")) install.packages("pacman")
-p_load(tidyverse, knitr, httr)
+p_load(tidyverse, knitr, httr, kableExtra)
 ```
 
 ## Inhalt
@@ -18,8 +18,8 @@ p_load(tidyverse, knitr, httr)
  > "If programming is magic, then web scraping is wizardry" (Mitchell 2015: vii)
 
 1. Einleitung
-2. Struktur des WWW
-3. Kurzanleitung & Toolbox
+2. Technologien des WWW
+3. Web Scraping (Toolbox)
 4. Rechtliche Aspekte
 5. Literatur(hinweise)
 6. "hands-on"-Übungen
@@ -29,8 +29,8 @@ p_load(tidyverse, knitr, httr)
 > "...something big is going on" (Salganik 2018: 2)
 
 - Übergang vom analogen zum digitalen Zeitalter
-    - Kommende Krise der empirischen Soziologie (Savage & Burrows 2007)
-    - Neue Möglichkeiten und/oder Gefahren
+    - Kommende Krise der empirischen Soziologie (Savage & Burrows 2007)?
+    - neue Möglichkeiten und/oder Gefahren (Salganik 2018: 17-41)
     
  > "'computational social science' (CSS) is occurring. The question is whether
  > it happens with or without social scientists" (Heiberger & Riebling 2016: 1)
@@ -111,7 +111,7 @@ include_graphics("Figures/http-request-response.png")
 include_graphics("Figures/http-url-structure.png")
 ```
 
-## Beispiel: HTTP
+## Beispiel: HTTP I
 
 - `GET` request mit `httr::GET` und response des Servers
 
@@ -122,12 +122,39 @@ response <- GET("https://www.wiso.uni-hamburg.de/fachbereich-sozoek/professuren/
   print()
 ```
 
+## Beispiel: HTTP II
+
+<div style="float: left; width: 70%;">
+```{r, echo = TRUE, eval = TRUE, message = FALSE, warning = FALSE}
+#install.packages("rvest")
+library(rvest)
+
+pubs <- response %>% 
+  read_html() %>% 
+  html_nodes("#4128883 li") %>% 
+  html_text() %>% 
+  tibble(pub = .) %>%
+  mutate(year = as.numeric(
+    str_extract(pub, pattern = "[:digit:]{4}"))) %>%
+  group_by(year) %>%
+  summarise(number = n())
+```
+</div>
+
+<div style="float: left; width: 30%;">
+```{r, echo = FALSE, eval = TRUE, message = FALSE, warning = FALSE}
+pubs %>%
+  kable() %>%
+  kable_styling()
+```
+</div>
+
 ## HTML
 
 **H**yper**t**ext **M**arkup **L**anguage [(HTML)](https://www.w3schools.com/html/default.asp)
 
-- Einfacher Text mit weiteren Anweisungen (Tags, Attributes...)
-    - Wird vom Browser interpretiert und dargestellt
+- einfacher Text mit weiteren Anweisungen (Tags, Attributes...)
+    - wird vom Browser interpretiert und dargestellt
     
 - HTML-Code ist über die Webentwicklungstools des Browsers verfügbar
     - Rechtsklick -> Element untersuchen (Firefox)
@@ -185,9 +212,32 @@ include_graphics("Figures/CSS-Example.png")
 [JavaScript](https://www.w3schools.com/js/default.asp): Programmiersprache des Internets
 
 - macht Internetseiten dynamisch
+- Inhalte erscheinen erst nach Ausführung von JS 
+    - problematisch für unsere Scraper
 
 ```{r}
 # Source: https://pudding.cool/2018/12/3d-cities-story/
 include_graphics("Figures/JavaScript-Example.png")
 ```
 Source: [The Pudding (2018)](https://pudding.cool/2018/12/3d-cities-story/)
+
+## Web Scraping (Toolbox)
+
+<div style="float: left; width: 70%;">
+
+In R ist Web Scraping über das Paket [`rvest`](https://github.com/hadley/rvest) möglich:
+
+1. `read_html`: Lesen von HTML/XML-Dateien
+2. `html_nodes`: Extrahiert Teile des HTML-Dokument mit Hilfe von XPATH/CSS-Selektoren
+3. `html_text`/`html_attr`: Extrahiert Text oder Attribute
+
+</div>
+
+<div style="float: right; width: 30%;">
+    
+```{r}
+# Source: http://hexb.in/
+include_graphics("Figures/rvest.png")
+```
+</div>
+
