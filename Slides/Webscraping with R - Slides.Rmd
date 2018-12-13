@@ -53,7 +53,7 @@ King et al. (2013):
 
 - **Frage**: Was wird zensiert?
 - **Vorgehen**: Online-Beiträge erheben und prüfen, welche zensiert werden
-- **Daten**: 11 Millionen Beiträge auf 1,382 Webseiten 
+- **Daten**: 11 Millionen Beiträge auf 1,382 Internetseiten 
 - **Ergebnisse**: Kritische Beiträge sind erlaubt; soziale Mobilisierung nicht
 </div>
 
@@ -223,13 +223,29 @@ Source: [The Pudding (2018)](https://pudding.cool/2018/12/3d-cities-story/)
 
 ## Web Scraping (Toolbox)
 
+Web Scraping-Projekte folgen einem generellen Schema:
+
+1. Internetseite kennenlernen
+2. Import von HTML-Dateien
+3. Information isolieren
+4. Datenspeicherung
+
+```{r}
+# Source: https://r4ds.had.co.nz/introduction.html
+include_graphics("Figures/data-science-workflow.png")
+```
+Source: [Wickham & Grolemund (2018)](https://r4ds.had.co.nz/introduction.html)
+
+## Web Scraping (Toolbox)
+
 <div style="float: left; width: 70%;">
 
-In R ist Web Scraping über das Paket [`rvest`](https://github.com/hadley/rvest) möglich:
+Das generelle Schema lässt sich in R über das Paket [`rvest`](https://github.com/hadley/rvest) umsetzen:
 
-1. `read_html`: Lesen von HTML/XML-Dateien
-2. `html_nodes`: Extrahiert Teile des HTML-Dokument mit Hilfe von XPATH/CSS-Selektoren
-3. `html_text`/`html_attr`: Extrahiert Text oder Attribute
+1. Kennenlernen der Internetseite [(u.a. `robotstxt`)](https://github.com/ropensci/robotstxt)
+2. `read_html`: Import von HTML/XML-Dateien
+3. `html_nodes`: Extrahiert Teile des HTML-Dokument mit Hilfe von XPath/CSS-Selektoren
+4. `html_text`/`html_attr`: Extrahiert Text oder Attribute
 
 </div>
 
@@ -241,3 +257,37 @@ include_graphics("Figures/rvest.png")
 ```
 </div>
 
+## Beispiel: Sonntagsfrage
+
+- Wahlrecht.de
+
+## (1) Kennlernen der Internetseite
+
+Fragen, die beantwortet werden müssen:
+
+- statische oder dynamische Internetseite
+    - statisch: `rvest`
+    - dynamisch: `Rselenium`
+- Web Scraping erlaubt
+    - Terms of Use 
+    - robots.txt
+
+## (2) Import von HTML-Dateien
+
+
+
+## XPath und CSS-Selektoren
+
+Zur Extraktion von Informationen nutzen wir die Baumstruktur von HTML:
+
+- [XPath](https://www.w3schools.com/xml/xpath_intro.asp)
+- [CSS-Selektoren](https://www.w3schools.com/csSref/css_selectors.asp)
+
+## XPath und CSS-Selektoren: Tools
+
+Wir konstruieren Selektoren selten manuell, da Anwendungen dies übernehmen.
+
+Tools:
+- [Selector Gadget](https://selectorgadget.com/)
+- Browser: [Webentwicklungstools](https://developer.mozilla.org/de/docs/Tools/Seiten_Inspektor)
+- Lerntools: [CSS Diner](https://flukeout.github.io/)
