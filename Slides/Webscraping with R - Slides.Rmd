@@ -32,8 +32,8 @@ p_load(tidyverse, knitr, httr, kableExtra)
     - Kommende Krise der empirischen Soziologie (Savage & Burrows 2007)?
     - neue Möglichkeiten und/oder Gefahren (Salganik 2018: 17-41)
     
- > "'computational social science' (CSS) is occurring. The question is whether
- > it happens with or without social scientists" (Heiberger & Riebling 2016: 1)
+> "'computational social science' (CSS) is occurring. The question is whether
+> it happens with or without social scientists" (Heiberger & Riebling 2016: 1)
     
 ## Neue Möglichkeiten: Beispiele
 
@@ -72,7 +72,7 @@ confounded, sensitive
 ## Struktur des WWW
 
 <div style="float: left; width: 70%;">
-Infrastruktur des Internets meist irrelevant.
+Infrastruktur des Internets im Alltag irrelevant.
 
 Unser Browser übernimmt:
 
@@ -89,7 +89,7 @@ der zugrundeliegenden Technologien.
 
 ## HTTP 
 
-**H**yper**t**ext **T**ransfer **P**rotocol 
+**H**yper**t**ext **T**ransfer **P**rotocol [(HTTP)](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol)
 
 ```{r}
 # Source: https://code.tutsplus.com/tutorials/http-the-protocol-every-web-developer-must-know-part-1--net-31177
