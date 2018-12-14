@@ -10,7 +10,7 @@ subtitle: Workshop an der Universität Hamburg
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 if(!require("pacman")) install.packages("pacman")
-p_load(tidyverse, knitr, httr, kableExtra)
+p_load(tidyverse, rvest, knitr, httr, kableExtra)
 ```
 
 ## Inhalt
@@ -259,24 +259,49 @@ include_graphics("Figures/rvest.png")
 
 ## Beispiel: Sonntagsfrage
 
-- Wahlrecht.de
-
-## (1) Kennlernen der Internetseite
+- Sonntagsfrage
+    - von verschiedenen Umfrageinstituten erhoben [(Wahlrecht.de)](https://www.wahlrecht.de/umfragen/)
+    - Archivfunktion (zeitlicher Verlauf)
+    
+Ziel: Aktuelle Umfragen aller Institute herunterladen und kombinieren.
+    
+## (1) Kennenlernen der Internetseite
 
 Fragen, die beantwortet werden müssen:
 
 - statische oder dynamische Internetseite
     - statisch: `rvest`
-    - dynamisch: `Rselenium`
+    - dynamisch: `RSelenium`
 - Web Scraping erlaubt
     - Terms of Use 
     - robots.txt
 
+## Wahlrecht: Kennenlernen der Internetseite
+
+Hierzu gehört:
+
+- Seitenquelltext: **statisch**
+- HTML-Tags der Zielinformation: **table / class: wilko**
+- robots.txt / Terms of Use: **keine relevanten Beschränkungen**
+
 ## (2) Import von HTML-Dateien
 
+Internetseiten müssen in ein Format übersetzt werden, welches von R gelesen und
+bearbeitet werden kann (z.B. Baumstruktur).
 
+Benötigt wird:
 
-## XPath und CSS-Selektoren
+- URL (Request/Response-Paar)
+
+## Wahlrecht: Import von HTML-Seiten
+
+Über `rvest::read_html`:
+
+```{r echo = TRUE, eval = TRUE}
+(html.page <- read_html("https://www.wahlrecht.de/umfragen/allensbach.htm"))
+```
+
+## (3) Information isolieren
 
 Zur Extraktion von Informationen nutzen wir die Baumstruktur von HTML:
 
@@ -288,6 +313,28 @@ Zur Extraktion von Informationen nutzen wir die Baumstruktur von HTML:
 Wir konstruieren Selektoren selten manuell, da Anwendungen dies übernehmen.
 
 Tools:
+
 - [Selector Gadget](https://selectorgadget.com/)
 - Browser: [Webentwicklungstools](https://developer.mozilla.org/de/docs/Tools/Seiten_Inspektor)
 - Lerntools: [CSS Diner](https://flukeout.github.io/)
+
+## Wahlrecht: CSS-Selektor
+
+HTML-Tabellen lassen sich oft besonders leicht identifizieren, da sie das Tag 
+"table" tragen: 
+
+```{r echo = TRUE, eval = TRUE}
+(html.node <- html_nodes(html.page, css = ".wilko")) 
+```
+
+## Wahlrecht: Umwandeln in Text/Tabelle
+
+Wir sind selten am HTML-Tag interessiert, sondern an dem Inhalt:
+
+```{r echo = TRUE, eval = TRUE}
+html.table <- html.node %>%
+  html_table(header = TRUE, fill = TRUE) %>%
+  .[[1]] %>%
+  glimpse()
+```
+
