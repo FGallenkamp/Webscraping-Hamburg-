@@ -11,7 +11,7 @@ p_load(tidyverse, lubridate, rvest)
 # Scrape and clean poll results
 ## ---------------------------------------------------------------------- ##
 vote.table <- read_html("https://www.wahlrecht.de/umfragen/allensbach.htm") %>%
-  html_nodes(xpath = "/html/body/table/tbody") %>%
+  html_nodes(css = ".wilko") %>%
   html_table(fill = TRUE, header = TRUE) %>%
   .[[1]] %>%
   .[4:nrow(.), c(1, 3:9)] %>%
