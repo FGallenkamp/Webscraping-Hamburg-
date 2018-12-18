@@ -10,7 +10,7 @@ subtitle: Workshop an der Universität Hamburg
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 if(!require("pacman")) install.packages("pacman")
-p_load(tidyverse, rvest, knitr, httr, kableExtra)
+p_load(tidyverse, rvest, knitr, httr, kableExtra, robotstxt)
 ```
 
 ## Inhalt
@@ -87,7 +87,7 @@ der zugrundeliegenden Technologien.
 ![<font size="3">[Transatlantisches Seekabel](https://davegreer.cc/INTERNET)</font>](Figures/Hibernia Atlantic transoceanic cable landing.jpg)
 </div>
 
-## HTTP 
+## HTTP I
 
 **H**yper**t**ext **T**ransfer **P**rotocol [(HTTP)](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol)
 
@@ -101,7 +101,7 @@ include_graphics("Figures/http-request-response.png")
     - Request (Client)
     - Response (Server)
 
-## HTTP
+## HTTP II
 
 - Requests erfolgen über **U**niform **R**esource **L**ocators [(URL)](https://en.wikipedia.org/wiki/URL)
     - Teile der URL können genutzt werden, um Informationen zu extrahieren
@@ -113,7 +113,7 @@ include_graphics("Figures/http-url-structure.png")
 
 ## Beispiel: HTTP I
 
-- `GET` request mit `httr::GET` und response des Servers
+- `GET`-Abfrage mit `httr::GET` und Antwort des Servers in R
 
 ```{r, echo = TRUE, eval = TRUE}
 #install.packages("httr")
@@ -163,7 +163,7 @@ pubs %>%
 
 Einfache Seiten über Editor/Notepad++ erstellbar:
 
-```{html, eval = FALSE, echo = TRUE}
+```{r, eval = FALSE, echo = TRUE}
 <!DOCTYPE html>
 <html>
 
@@ -219,7 +219,8 @@ include_graphics("Figures/CSS-Example.png")
 # Source: https://pudding.cool/2018/12/3d-cities-story/
 include_graphics("Figures/JavaScript-Example.png")
 ```
-Source: [The Pudding (2018)](https://pudding.cool/2018/12/3d-cities-story/)
+
+Quelle: [The Pudding (2018)](https://pudding.cool/2018/12/3d-cities-story/)
 
 ## 3. Web Scraping (Toolbox)
 
@@ -248,8 +249,6 @@ Das generelle Schema lässt sich in R über das Paket [`rvest`](https://github.c
     - `html_nodes`: Extrahiert Teile des HTML-Dokument mit Hilfe von XPath/CSS-Selektoren
     - `html_text` / `html_attr` / `html_table`: Extrahiert Text, Attribute und Tabellen
 4. `map` (package: [purrr](https://purrr.tidyverse.org/)): Iteration (loops)
-
-Quelle: vgl. Mitchell 2015
 </div>
 
 <div style="float: right; width: 30%;">
@@ -266,16 +265,23 @@ include_graphics("Figures/rvest.png")
     - Archivfunktion (zeitlicher Verlauf)
     
 Ziel: Aktuelle Umfragen aller Institute herunterladen und kombinieren.
-    
+
+```{r}
+# Source: https://www.tagesschau.de/inland/deutschlandtrend/
+include_graphics("Figures/Sonntagsfrage.png")
+```
+
+Quelle: [Tagesschau.de](https://www.tagesschau.de/inland/deutschlandtrend/)
+
 ## (1) Kennenlernen der Internetseite
 
-Fragen, die beantwortet werden müssen:
+Fragen, die beantwortet werden sollten:
 
 - statische oder dynamische Internetseite
     - statisch: [`rvest`](https://github.com/hadley/rvest)
     - dynamisch: [`RSelenium`](https://github.com/ropensci/RSelenium)
 - Web Scraping erlaubt
-    - Terms of Use 
+    - Terms of Service (ToS)
     - robots.txt
 
 ## Wahlrecht: Kennenlernen der Internetseite
@@ -285,6 +291,13 @@ Hierzu gehört:
 - Seitenquelltext: **statisch**
 - HTML-Tags der Zielinformation: **table / class: wilko**
 - robots.txt / Terms of Use: **keine relevanten Beschränkungen**
+
+```{r echo = TRUE, eval = TRUE}
+paths_allowed(
+  paths  = c("/index.htm","/allensbach.htm"), 
+  domain = c("wahlrecht.de")
+)
+```
 
 ## (2) Import von HTML-Dateien
 
@@ -310,6 +323,13 @@ Zur Extraktion von Informationen nutzen wir die Baumstruktur von HTML:
 
 - [XPath](https://www.w3schools.com/xml/xpath_intro.asp)
 - [CSS-Selektoren](https://www.w3schools.com/csSref/css_selectors.asp)
+
+```{r, out.width = "90%", out.height = "95%"}
+# Source: https://wiki.selfhtml.org/wiki/XML/Regeln/Baumstruktur
+include_graphics("Figures/TreeStructureII.png")
+```
+
+Quelle: [selfhtml.de](https://wiki.selfhtml.org/wiki/XML/Regeln/Baumstruktur)
 
 ## XPath und CSS-Selektoren: Tools
 
@@ -366,8 +386,8 @@ include_graphics("Figures/RegexOrly.jpg")
 
 ## Wahlrecht: Regex
 
-Die Umfrageergebnisse liegen als "strings" vor, sodass wir sie für die Daten-
-analyse in numerische Werte umwandeln müssen.
+Die Umfrageergebnisse liegen als "strings" vor, sodass wir sie für die Datenanalyse 
+in numerische Werte umwandeln müssen.
 
 ```{r echo = TRUE, eval = TRUE}
 str_view(string = html.table$`CDU/CSU`[1:5],
@@ -381,16 +401,16 @@ Wir ersetzen zudem die Kommata durch Punkte und wandeln die Daten in ein
 
 ```{r echo = TRUE, eval = TRUE}
 allensbach.df <- html.table %>%
-  rename("Zeitpunkt" = 1) %>%
-  mutate(Zeitpunkt = parse_datetime(Zeitpunkt, 
+  rename("Zeitpunkt" = 1) %>%                                 # 1. Variable benennen                    
+  mutate(Zeitpunkt = parse_datetime(Zeitpunkt,                # 2. als Datum
                                     format = "%d.%m.%Y")) %>%
-  mutate_if(is.character, str_extract, 
+  mutate_if(is.character, str_extract,                        # 3a. Zahl entnehmen
             pattern = "[:digit:]+,?[:digit:]?") %>%
-  mutate_if(is.character, str_replace, 
+  mutate_if(is.character, str_replace,                        # 3b. Komma als Punkt
             pattern = ",", replacement = ".") %>%
-  mutate_if(is.character, as.numeric) %>%
-  gather(party, vote, -Zeitpunkt) %>%
-  glimpse()
+  mutate_if(is.character, as.numeric) %>%                     # 3c. als Zahl
+  gather(party, vote, -Zeitpunkt) %>%                         # 4. long format
+  glimpse()                                                   # 5. ausgeben
 ```
 
 ## Visualisierung
@@ -410,6 +430,27 @@ ggplot(subset(allensbach.df, party != "Sonstige"),
   theme_minimal()
 ```
 
+## 4. Rechtliche Aspekte
 
+> "Big data? Cheap. Lawyers? Not so much." (Pete Warden zit. in Mitchell 2015: 217)
 
+- rechtliche Grauzone
+- länderspezifisch (USA: strikt; Deutschland: liberal)
+- Terms of Service (ToS) beachten
+- robots.txt prüfen
+
+## Rechtliche Aspekte in der Praxis
+
+Ziel: "friendly scraping" 
+
+- Server nicht überlasten ([crawl delay](https://rud.is/b/2017/07/28/analyzing-wait-delay-settings-in-common-crawl-robots-txt-data-with-r/))
+    - `Sys.sleep` einbauen (~5-10 Sekunden)
+    - zufällige Wartezeit, um menschlisches Verhalten zu imitieren
+- Bot oder Mensch
+    - headless browsing
+        - [RSelenium](https://github.com/ropensci/RSelenium), [decapitated](https://github.com/hrbrmstr/decapitated), [splashr](https://github.com/hrbrmstr/splashr) oder [htmlunit](https://github.com/hrbrmstr/htmlunit)
+- API vorhanden (Sammlung unter [programmableweb.com](https://www.programmableweb.com/))
+- Seitenbetreiber kontaktieren
+
+## 5. Literatur(hinweise)
 
