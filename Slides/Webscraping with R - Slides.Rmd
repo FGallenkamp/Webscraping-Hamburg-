@@ -20,6 +20,8 @@ p_load(tidyverse, rvest, knitr, httr, kableExtra, robotstxt)
 1. Einleitung
 2. Technologien des WWW
 3. Web Scraping (Toolbox)
+  a. Generelles Schema
+  b. Spezielle Technologien
 4. Rechtliche Aspekte
 5. Literatur(hinweise)
 6. "hands-on"-Übungen
@@ -222,7 +224,7 @@ include_graphics("Figures/JavaScript-Example.png")
 
 Quelle: [The Pudding (2018)](https://pudding.cool/2018/12/3d-cities-story/)
 
-## 3. Web Scraping (Toolbox)
+## 3a. Web Scraping (Toolbox)
 
 Web Scraping-Projekte folgen einem generellen Schema:
 
@@ -439,7 +441,19 @@ ggplot(subset(allensbach.df, party != "Sonstige"),
 - Terms of Service (ToS) beachten
 - robots.txt prüfen
 
-## Rechtliche Aspekte in der Praxis
+## 3b. Spezielle Technologien
+
+Spezielle Möglichkeiten & Herausforderungen:
+
+[**A**pplication **P**rogramming **I**nterface](https://en.wikipedia.org/wiki/Application_programming_interface)
+- **erleichtert** den Zugriff auf Daten über spezifische Schnittstellen
+- Beispiele: [Twitter](https://developer.twitter.com/en.html), [Die Zeit](http://developer.zeit.de/index/) oder [Eurostat](https://ec.europa.eu/eurostat/web/json-and-unicode-web-services)
+    
+dynamische Webseiten & bot blocking:
+- **erschwert** Zugriff, da Daten erst nach Nutzeranfragen erzeugt werden
+- Süddeutsche Zeitung, ArtFacts
+
+## 4. Rechtliche Aspekte in der Praxis
 
 Ziel: "friendly scraping" 
 
