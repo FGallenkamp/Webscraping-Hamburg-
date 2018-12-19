@@ -432,6 +432,43 @@ ggplot(subset(allensbach.df, party != "Sonstige"),
   theme_minimal()
 ```
 
+## 3b. Spezielle Technologien
+
+<div style="float: left; width: 60%;">
+Spezielle Möglichkeiten & Herausforderungen:
+
+[**A**pplication **P**rogramming **I**nterface](https://en.wikipedia.org/wiki/Application_programming_interface)
+
+- **erleichtert** den Zugriff auf Daten über spezifische Schnittstellen
+- Beispiele: [Twitter](https://developer.twitter.com/en.html), [Die Zeit](http://developer.zeit.de/index/) oder [Eurostat](https://ec.europa.eu/eurostat/web/json-and-unicode-web-services)
+    
+dynamische Webseiten & bot blocking:
+
+- **erschwert** Zugriff, da Daten erst nach Nutzeranfragen erzeugt werden
+- Süddeutsche Zeitung, ArtFacts
+</div>
+
+<div style="float: left; width: 40%;">
+```{r echo = FALSE, eval = TRUE}
+api.plot.df <- readRDS(file = "./Figures/api_plot_df.R")
+
+api.plot <- ggplot(api.plot.df, aes(x = Submitted, y = cumulative.n)) +
+  geom_line(stat = "identity") +
+  theme_minimal() +
+  labs(title = "Anzahl and APIs auf programmableweb.com",
+       subtitle = "Eine steigende Anzahl an Unternehmen bietet APIs an.",
+       caption = "Quelle: programmableweb.org",
+       x = "", 
+       y = "")
+  theme(panel.grid.minor.x = element_blank(),
+        panel.grid.major.x = element_blank(),
+        text = element_text(size = 14),
+        axis.ticks = element_line(size = .5))
+  
+plot(api.plot)
+```
+</div>
+
 ## 4. Rechtliche Aspekte
 
 > "Big data? Cheap. Lawyers? Not so much." (Pete Warden zit. in Mitchell 2015: 217)
@@ -440,18 +477,6 @@ ggplot(subset(allensbach.df, party != "Sonstige"),
 - länderspezifisch (USA: strikt; Deutschland: liberal)
 - Terms of Service (ToS) beachten
 - robots.txt prüfen
-
-## 3b. Spezielle Technologien
-
-Spezielle Möglichkeiten & Herausforderungen:
-
-[**A**pplication **P**rogramming **I**nterface](https://en.wikipedia.org/wiki/Application_programming_interface)
-- **erleichtert** den Zugriff auf Daten über spezifische Schnittstellen
-- Beispiele: [Twitter](https://developer.twitter.com/en.html), [Die Zeit](http://developer.zeit.de/index/) oder [Eurostat](https://ec.europa.eu/eurostat/web/json-and-unicode-web-services)
-    
-dynamische Webseiten & bot blocking:
-- **erschwert** Zugriff, da Daten erst nach Nutzeranfragen erzeugt werden
-- Süddeutsche Zeitung, ArtFacts
 
 ## 4. Rechtliche Aspekte in der Praxis
 
