@@ -11,8 +11,8 @@ einzuführen. Hierzu werden wir uns zunächst mit der Grundstruktur von Webseite
 auseinandersetzen. Wichtige Grundlagen sind hier HTML, CSS und JavaScript. Im 
 Anschluss wird ein Schema vorgestellt und erarbeitet, welches sich für die 
 Umsetzung eines Web Scraping-Projektes eignet. Anhand mehrerer Beispiele soll 
-dieses Schema mit Hilfe des statistischen Programmiersprache R umgesetzt werden. 
-Im Anschluss an Vortrag sollen einige "hand-on"-Übungen die erlernten Techniken 
+dieses Schema mit Hilfe der statistischen Programmiersprache R umgesetzt werden. 
+Im Anschluss an den Vortrag werden einige "hand-on"-Übungen die erlernten Techniken 
 zur Anwendung bringen. 
 
 **Organisation**
