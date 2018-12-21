@@ -441,10 +441,10 @@ Spezielle Möglichkeiten & Herausforderungen:
 - **erleichtert** den Zugriff auf Daten über spezifische Schnittstellen
 - Beispiele: [Twitter](https://developer.twitter.com/en.html), [Die Zeit](http://developer.zeit.de/index/) oder [Eurostat](https://ec.europa.eu/eurostat/web/json-and-unicode-web-services)
     
-dynamische Webseiten & bot blocking:
+Dynamische Webseiten & bot blocking:
 
 - **erschwert** Zugriff, da Daten erst nach Nutzeranfragen erzeugt werden
-- Süddeutsche Zeitung, ArtFacts
+- Beispiele: Süddeutsche Zeitung (Archiv), ArtFacts
 
 ## APIs: Steigende Relevanz
 
@@ -466,6 +466,10 @@ ggplot(api.plot.df, aes(x = Submitted, y = cumulative.n)) +
 ```
 
 Quelle: Eigene Darstellung [(Code)](https://github.com/FabianFox/Webscraping-Hamburg-/blob/master/Code/programmableweb-Scraper.R)
+
+## API: Eurostat
+
+Eurostat bietet eine API für Datenbankabfragen an (Paket: `eurostat`)
 
 ## 4. Rechtliche Aspekte
 
