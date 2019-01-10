@@ -10,7 +10,7 @@ subtitle: Workshop an der Universität Hamburg
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 if(!require("pacman")) install.packages("pacman")
-p_load(tidyverse, rvest, knitr, httr, kableExtra, robotstxt)
+p_load(tidyverse, rvest, knitr, httr, kableExtra, robotstxt, eurostat)
 ```
 
 ## Inhalt
@@ -20,8 +20,8 @@ p_load(tidyverse, rvest, knitr, httr, kableExtra, robotstxt)
 1. Einleitung
 2. Technologien des WWW
 3. Web Scraping (Toolbox)
-  a. Generelles Schema
-  b. Spezielle Technologien
+    a. Generelles Schema
+    b. Spezielle Technologien
 4. Rechtliche Aspekte
 5. Literatur(hinweise)
 6. "hands-on"-Übungen
@@ -31,7 +31,7 @@ p_load(tidyverse, rvest, knitr, httr, kableExtra, robotstxt)
 > "...something big is going on" (Salganik 2018: 2)
 
 - Übergang vom analogen zum digitalen Zeitalter
-    - Kommende Krise der empirischen Soziologie (Savage & Burrows 2007)?
+    - kommende Krise der empirischen Soziologie (Savage & Burrows 2007)?
     - neue Möglichkeiten und/oder Gefahren (Salganik 2018: 17-41)
     
 > "'computational social science' (CSS) is occurring. The question is whether
@@ -93,7 +93,7 @@ der zugrundeliegenden Technologien.
 
 **H**yper**t**ext **T**ransfer **P**rotocol [(HTTP)](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol)
 
-```{r}
+```{r, out.width = "50%"}
 # Source: https://code.tutsplus.com/tutorials/http-the-protocol-every-web-developer-must-know-part-1--net-31177
 include_graphics("Figures/http-request-response.png")
 ```
@@ -108,7 +108,7 @@ include_graphics("Figures/http-request-response.png")
 - Requests erfolgen über **U**niform **R**esource **L**ocators [(URL)](https://en.wikipedia.org/wiki/URL)
     - Teile der URL können genutzt werden, um Informationen zu extrahieren
     
-```{r}
+```{r, out.width = "50%"}
 # Source: https://code.tutsplus.com/tutorials/http-the-protocol-every-web-developer-must-know-part-1--net-31177
 include_graphics("Figures/http-url-structure.png")
 ```
@@ -192,7 +192,7 @@ HTML:
     - **D**ocument **O**bject **M**odel [(DOM)](https://en.wikipedia.org/wiki/Document_Object_Model)
     - Darstellung von HTML in R (parsing)
     
-```{r}
+```{r, out.width = "70%"}
 # Source: https://www.wiso.uni-hamburg.de/fachbereich-sozoek/professuren/lohmann/team/hertel-florian.html
 include_graphics("Figures/TreeStructure.png")
 ```
@@ -204,7 +204,7 @@ include_graphics("Figures/TreeStructure.png")
 - beinhaltet Informationen über den Stil der HTML-Seite
 - kann genutzt werden, um Informationen zu lokalisieren (CSS-Selektoren)
 
-```{r}
+```{r, out.width = "30%"}
 # Source: https://en.wikipedia.org/wiki/Cascading_Style_Sheets
 include_graphics("Figures/CSS-Example.png")
 ```
@@ -217,7 +217,7 @@ include_graphics("Figures/CSS-Example.png")
 - Inhalte erscheinen erst nach Ausführung von JS 
     - problematisch für unsere Scraper
 
-```{r}
+```{r, out.width = "50%"}
 # Source: https://pudding.cool/2018/12/3d-cities-story/
 include_graphics("Figures/JavaScript-Example.png")
 ```
@@ -233,7 +233,7 @@ Web Scraping-Projekte folgen einem generellen Schema:
 3. Information isolieren
 4. Iteration (loops)
 
-```{r}
+```{r, out.width = "50%"}
 # Source: https://r4ds.had.co.nz/introduction.html
 include_graphics("Figures/data-science-workflow.png")
 ```
@@ -254,7 +254,7 @@ Das generelle Schema lässt sich in R über das Paket [`rvest`](https://github.c
 </div>
 
 <div style="float: right; width: 30%;">
-```{r}
+```{r, out.width = "50%"}
 # Source: http://hexb.in/
 include_graphics("Figures/rvest.png")
 ```
@@ -268,7 +268,7 @@ include_graphics("Figures/rvest.png")
     
 Ziel: Aktuelle Umfragen aller Institute herunterladen und kombinieren.
 
-```{r}
+```{r, out.width = "50%"}
 # Source: https://www.tagesschau.de/inland/deutschlandtrend/
 include_graphics("Figures/Sonntagsfrage.png")
 ```
@@ -326,7 +326,7 @@ Zur Extraktion von Informationen nutzen wir die Baumstruktur von HTML:
 - [XPath](https://www.w3schools.com/xml/xpath_intro.asp)
 - [CSS-Selektoren](https://www.w3schools.com/csSref/css_selectors.asp)
 
-```{r, out.width = "90%", out.height = "95%"}
+```{r, out.width = "80%", out.height = "85%"}
 # Source: https://wiki.selfhtml.org/wiki/XML/Regeln/Baumstruktur
 include_graphics("Figures/TreeStructureII.png")
 ```
@@ -439,12 +439,12 @@ Spezielle Möglichkeiten & Herausforderungen:
 [**A**pplication **P**rogramming **I**nterface](https://en.wikipedia.org/wiki/Application_programming_interface)
 
 - **erleichtert** den Zugriff auf Daten über spezifische Schnittstellen
-- Beispiele: [Twitter](https://developer.twitter.com/en.html), [Die Zeit](http://developer.zeit.de/index/) oder [Eurostat](https://ec.europa.eu/eurostat/web/json-and-unicode-web-services)
+    - Beispiele: [Twitter](https://developer.twitter.com/en.html), [Die Zeit](http://developer.zeit.de/index/), [Eurostat](https://ec.europa.eu/eurostat/web/json-and-unicode-web-services), [Wikipedia](https://github.com/Ironholds/WikipediR/)
     
 Dynamische Webseiten & bot blocking:
 
 - **erschwert** Zugriff, da Daten erst nach Nutzeranfragen erzeugt werden
-- Beispiele: Süddeutsche Zeitung (Archiv), ArtFacts
+    - Beispiele: Süddeutsche Zeitung (Archiv), ArtFacts
 
 ## APIs: Steigende Relevanz
 
@@ -469,7 +469,51 @@ Quelle: Eigene Darstellung [(Code)](https://github.com/FabianFox/Webscraping-Ham
 
 ## API: Eurostat
 
-Eurostat bietet eine API für Datenbankabfragen an (Paket: `eurostat`)
+Eurostat bietet eine API für Datenbankabfragen an (Paket: [`eurostat`](https://ropengov.github.io/eurostat/))
+
+Es gibt ein ["Cheatsheet"](https://github.com/rstudio/cheatsheets/raw/master/eurostat.pdf) für das Paket, welches das folgende Vorgehen beschreibt:
+
+1. Suche nach [Daten](https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?sort=1&file=table_of_contents_en.pdf) (`search_eurostat`) 
+2. Herunterladen der Daten (`get_eurostat`)
+3. Datenaufbereitung (`tidyverse`)
+
+## Beispiel: Eurostat
+
+Arbeitslosenquote:
+
+1. Daten suchen
+
+```{r echo = TRUE, eval = TRUE, warning = FALSE}
+content <- search_eurostat(pattern = "unemployment rate", type = "dataset") %>%
+  glimpse()
+```
+
+2. Daten herunterladen
+
+```{r echo = TRUE, eval = TRUE, warning = FALSE}
+unem.df <- get_eurostat(id = content$code[1],                  # Variable
+                        time_format = "date",                  # Datumsformat
+                        filters = list(s_adj = "NSA",          # Datenfilter
+                                       indic = "LM-UN-T-TOT", 
+                                       geo = "EU28"),
+                        stringsAsFactors = FALSE) 
+```
+
+3. Datenaufbereitung
+
+```{r echo = TRUE, eval = TRUE, warning = FALSE}
+# 3. Datenaufbereitung
+unem.df %>%
+  filter(time >= "2018-01-01") %>%
+  ggplot() +
+  geom_line(mapping = aes(x = time, y = values), stat = "identity") +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  theme_minimal() +
+  labs(title = "Monatliche Arbeitslosenquote (EU28), 2018",
+       caption = "Quelle: eurostat (LM-UN-T-TOT)",
+       x = "", 
+       y = "")
+```
 
 ## 4. Rechtliche Aspekte
 
@@ -495,3 +539,15 @@ Ziel: "friendly scraping"
 
 ## 5. Literatur(hinweise)
 
+## 6. "hands-on"-Übungen
+
+Statische Seiten
+- Gründerszene
+
+Dynamische Seiten
+- ArtFacts
+
+API
+- Twitter
+- Spotify
+- Eurostat
