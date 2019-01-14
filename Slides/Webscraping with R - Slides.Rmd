@@ -10,12 +10,12 @@ subtitle: Workshop an der Universität Hamburg
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 if(!require("pacman")) install.packages("pacman")
-p_load(tidyverse, rvest, knitr, httr, kableExtra, robotstxt, eurostat)
+p_load(tidyverse, rvest, knitr, httr, kableExtra, robotstxt, eurostat, lubridate)
 ```
 
 ## Inhalt
 
- > "If programming is magic, then web scraping is wizardry" (Mitchell 2015: vii)
+ > "If programming is magic, then web scraping is wizardry" ([Mitchell 2015: vii](http://shop.oreilly.com/product/0636920034391.do))
 
 1. Einleitung
 2. Technologien des WWW
@@ -23,19 +23,18 @@ p_load(tidyverse, rvest, knitr, httr, kableExtra, robotstxt, eurostat)
     a. Generelles Schema
     b. Spezielle Technologien
 4. Rechtliche Aspekte
-5. Literatur(hinweise)
-6. "hands-on"-Übungen
+5. Weitere Beispiele und Anwendungen
 
 ## 1. Einleitung
 
-> "...something big is going on" (Salganik 2018: 2)
+> "...something big is going on" ([Salganik 2018: 2](https://www.bitbybitbook.com/en/1st-ed/preface/))
 
 - Übergang vom analogen zum digitalen Zeitalter
-    - kommende Krise der empirischen Soziologie (Savage & Burrows 2007)?
-    - neue Möglichkeiten und/oder Gefahren (Salganik 2018: 17-41)
+    - kommende Krise der empirischen Soziologie ([Savage & Burrows 2007](https://journals.sagepub.com/doi/10.1177/0038038507080443#articleShareContainer))?
+    - neue Möglichkeiten und/oder Gefahren ([Salganik 2018: 17-41](https://www.bitbybitbook.com/en/1st-ed/observing-behavior/characteristics/))
     
 > "'computational social science' (CSS) is occurring. The question is whether
-> it happens with or without social scientists" (Heiberger & Riebling 2016: 1)
+> it happens with or without social scientists" ([Heiberger & Riebling 2016: 1](https://journals.sagepub.com/doi/abs/10.1177/2059799115622763))
     
 ## Neue Möglichkeiten: Beispiele
 
@@ -51,7 +50,7 @@ discursive connections between Islamophobia and anti-feminism on an online forum
 ## Censorship in China
 
 <div style="float: left; width: 50%;">
-King et al. (2013):
+King et al. ([2013](http://bit.ly/2E1Yjhc)):
 
 - **Frage**: Was wird zensiert?
 - **Vorgehen**: Online-Beiträge erheben und prüfen, welche zensiert werden
@@ -69,7 +68,7 @@ King et al. (2013):
 - negativ: incomplete, inaccessible, nonrepresentative, drifting, algorithmically 
 confounded, sensitive
 
-(Salganik 2018: 17-41)
+Quelle: [Salganik 2018: 17-41](https://www.bitbybitbook.com/en/1st-ed/observing-behavior/characteristics/)
 
 ## 2. Technologien des WWW
 
@@ -292,7 +291,7 @@ Hierzu gehört:
 
 - Seitenquelltext: **statisch**
 - HTML-Tags der Zielinformation: **table / class: wilko**
-- robots.txt / Terms of Use: **keine relevanten Beschränkungen**
+- robots.txt / Terms of Service: **keine relevanten Beschränkungen**
 
 ```{r echo = TRUE, eval = TRUE}
 paths_allowed(
@@ -432,11 +431,67 @@ ggplot(subset(allensbach.df, party != "Sonstige"),
   theme_minimal()
 ```
 
+## (4) Iteration
+
+Wird in den weiteren Anwendungen besprochen ([Code](https://github.com/FabianFox/Webscraping-Hamburg-/blob/master/Code/WahlrechtDe-Scraper.R))
+
+```{r echo = FALSE, eval = TRUE}
+institute.href <- read_html("https://www.wahlrecht.de/umfragen/index.htm") %>%
+  html_nodes(".in a") %>%
+  html_attr("href") %>%
+  tibble(institute = str_extract(., "[:alpha:]+(?=.)"),
+         link = paste0("https://www.wahlrecht.de/umfragen/", .)) %>%
+  rename("href" = 1)
+
+# For filtering
+parties <- c("CDU/CSU", "SPD", "GRÜNE", "FDP", "LINKE", "AfD") 
+
+# (2) Create a function that grabs the tables 
+poll_scraper <- function(x) {
+  read_html(x) %>%
+    html_nodes(".wilko") %>%
+    html_table(fill = TRUE, header = TRUE) %>%
+    .[[1]] %>%
+    .[min(                                                                         # Which row is the first one with a date? 
+      which(
+        str_detect(
+          string = .[,1], "[:digit:]+.?[:digit:]+.?[:digit:]+") == TRUE)):nrow(.), 
+      c(1, which(colnames(.) %in% parties))] %>%                                   
+    rename("Zeitpunkt" = 1) %>%
+    mutate(Zeitpunkt = parse_datetime(Zeitpunkt, format = "%d.%m.%Y")) %>%
+    mutate_if(is.character, str_extract, pattern = "[:digit:]+,?[:digit:]?") %>%
+    mutate_if(is.character, str_replace, pattern = ",", replacement = ".") %>%
+    mutate_if(is.character, as.numeric) %>%
+    gather(party, vote, -Zeitpunkt)
+}
+
+# (3) Grab all polls of all institute
+polls <- map(institute.href$link, poll_scraper) %>% 
+  setNames(institute.href$institute) # Name the list
+
+# (4) Name lists and combine in a data set
+polls.df <- polls %>%
+  bind_rows(.id = "institute")
+
+# Visualize
+ggplot(subset(polls.df, year(Zeitpunkt) > 2014),
+       aes(x = Zeitpunkt, y = vote, colour = party)) +
+  geom_line(size = 1.5) +
+  facet_wrap(~institute) +
+  scale_color_manual(values = c("#009EE0", "#000000", "#FFED00", "#64A12D",
+                                "#BE3075", "#EB001F"),
+                     guide = guide_legend(title = NULL)) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  labs(title = "Sonntagsfrage: Wenn am nächsten Sonntag Bundestagswahl wäre...",
+       x = "", y = "", caption = "Quelle: wahlrecht.de") +
+  theme_minimal()
+```
+
 ## 3b. Spezielle Technologien
 
 Spezielle Möglichkeiten & Herausforderungen:
 
-[**A**pplication **P**rogramming **I**nterface](https://en.wikipedia.org/wiki/Application_programming_interface)
+[**A**pplication **P**rogramming **I**nterface (API)](https://en.wikipedia.org/wiki/Application_programming_interface)
 
 - **erleichtert** den Zugriff auf Daten über spezifische Schnittstellen
     - Beispiele: [Twitter](https://developer.twitter.com/en.html), [Die Zeit](http://developer.zeit.de/index/), [Eurostat](https://ec.europa.eu/eurostat/web/json-and-unicode-web-services), [Wikipedia](https://github.com/Ironholds/WikipediR/)
@@ -517,7 +572,7 @@ unem.df %>%
 
 ## 4. Rechtliche Aspekte
 
-> "Big data? Cheap. Lawyers? Not so much." (Pete Warden zit. in Mitchell 2015: 217)
+> "Big data? Cheap. Lawyers? Not so much." (Pete Warden zit. in [Mitchell 2015: 217](http://shop.oreilly.com/product/0636920034391.do))
 
 - rechtliche Grauzone
 - länderspezifisch (USA: strikt; Deutschland: liberal)
@@ -530,24 +585,25 @@ Ziel: "friendly scraping"
 
 - Server nicht überlasten ([crawl delay](https://rud.is/b/2017/07/28/analyzing-wait-delay-settings-in-common-crawl-robots-txt-data-with-r/))
     - `Sys.sleep` einbauen (~5-10 Sekunden)
-    - zufällige Wartezeit, um menschlisches Verhalten zu imitieren
+    - zufällige Wartezeit, um menschliches Verhalten zu imitieren
 - Bot oder Mensch
-    - headless browsing
+    - "headless browsing"
         - [RSelenium](https://github.com/ropensci/RSelenium), [decapitated](https://github.com/hrbrmstr/decapitated), [splashr](https://github.com/hrbrmstr/splashr) oder [htmlunit](https://github.com/hrbrmstr/htmlunit)
-- API vorhanden (Sammlung unter [programmableweb.com](https://www.programmableweb.com/))
+- API nutzen (Sammlung unter [programmableweb.com](https://www.programmableweb.com/))
 - Seitenbetreiber kontaktieren
 
-## 5. Literatur(hinweise)
+## 5. "hands-on"-Übungen
 
-## 6. "hands-on"-Übungen
+Weitere Beispiele:
 
-Statische Seiten
-- Gründerszene
+- statische Seiten
+    - [Gründerszene.de](https://github.com/FabianFox/Webscraping-Hamburg-/blob/master/Code/GruenderszeneDe-Scraper.R)
+    - [Wahlrecht.de](https://github.com/FabianFox/Webscraping-Hamburg-/blob/master/Code/WahlrechtDe-Scraper.R)
+    - [Soziologie.org](https://github.com/FabianFox/Webscraping-Hamburg-/blob/master/Code/SoziologieOrg-Scraper.R) 
+    
+- dynamische Seiten
+    - RSelenium
 
-Dynamische Seiten
-- ArtFacts
-
-API
-- Twitter
-- Spotify
-- Eurostat
+- APIs
+    - Twitter
+    - Eurostat
