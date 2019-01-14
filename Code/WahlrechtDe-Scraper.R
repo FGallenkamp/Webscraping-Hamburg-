@@ -55,7 +55,7 @@ poll_scraper <- function(x) {
     html_nodes(".wilko") %>%
     html_table(fill = TRUE, header = TRUE) %>%
     .[[1]] %>%
-    .[min(
+    .[min(                                                                         # Which row is the first one with a date? 
       which(
         str_detect(
           string = .[,1], "[:digit:]+.?[:digit:]+.?[:digit:]+") == TRUE)):nrow(.),
