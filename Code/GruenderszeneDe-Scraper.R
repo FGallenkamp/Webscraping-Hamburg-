@@ -273,14 +273,16 @@ startup.location <- startup.df %>%
 
 # Anzahl der Startups nach Ort 
 ggplot(startup.location) +
-  geom_bar(aes(x = fct_reorder(location, count), y = count), stat = "identity")
+  geom_bar(aes(x = fct_reorder(location, count), y = count), 
+           stat = "identity")
 
 # Auf einer geographischen Karte (package: rnaturalearth)
 base.map <- ne_countries(returnclass = "sf") %>%
   filter(region_un == "Europe")
 
 # Geocode (package: ggmap)
-startup.location <- mutate_geocode(startup.location, location, "latlon", source = "dsk")
+startup.location <- mutate_geocode(startup.location, location, "latlon", 
+                                   source = "dsk")
 
 # Map (could need refinement ofc)
 ggplot(base.map) +
