@@ -27,7 +27,7 @@ p_load(tidyverse, rvest, knitr, httr, kableExtra, robotstxt, eurostat, lubridate
 
 ## Zur Präsentation
 
-- Folien sind online verfügbar: https://goo.gl/Dnxq2G
+- Folien sind online verfügbar: https://goo.gl/erTCX7
     - Folien im Browser öffnen
 - Benötigte Pakete über: 
 
