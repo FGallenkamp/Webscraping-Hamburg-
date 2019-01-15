@@ -602,8 +602,7 @@ Weitere Beispiele:
     - [Soziologie.org](https://github.com/FabianFox/Webscraping-Hamburg-/blob/master/Code/SoziologieOrg-Scraper.R) 
     
 - dynamische Seiten
-    - RSelenium
+    - [ArtFacts.net](https://github.com/FabianFox/Webscraping-Hamburg-/blob/master/Code/ArtFacts-Scraper.R)
 
 - APIs
-    - Twitter
-    - Eurostat
+    - [Twitter](https://github.com/FabianFox/Webscraping-Hamburg-/blob/master/Code/TwitterExample.R)
