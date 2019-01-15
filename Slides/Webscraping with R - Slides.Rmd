@@ -27,11 +27,12 @@ p_load(tidyverse, rvest, knitr, httr, kableExtra, robotstxt, eurostat, lubridate
 
 ## Zur Präsentation
 
-- Folien sind online verfügbar: 
-- Benötigte Pakete über:
+- Folien sind online verfügbar: https://goo.gl/Dnxq2G
+    - Folien im Browser öffnen
+- Benötigte Pakete über: 
 
 ```{r echo = TRUE, eval = FALSE}
-install.packages(pacman)
+install.packages(pacman) # Installation nur einmal notwendig
 library(pacman)
 p_load(tidyverse, rvest, httr, robotstxt, eurostat, lubridate)
 ```
