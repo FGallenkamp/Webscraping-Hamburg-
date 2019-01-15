@@ -25,6 +25,17 @@ p_load(tidyverse, rvest, knitr, httr, kableExtra, robotstxt, eurostat, lubridate
 4. Rechtliche Aspekte
 5. Weitere Beispiele und Anwendungen
 
+## Zur Präsentation
+
+- Folien sind online verfügbar: 
+- Benötigte Pakete über:
+
+```{r echo = TRUE, eval = FALSE}
+install.packages(pacman)
+library(pacman)
+p_load(tidyverse, rvest, httr, robotstxt, eurostat, lubridate)
+```
+
 ## 1. Einleitung
 
 > "...something big is going on" ([Salganik 2018: 2](https://www.bitbybitbook.com/en/1st-ed/preface/))
@@ -606,3 +617,11 @@ Weitere Beispiele:
 
 - APIs
     - [Twitter](https://github.com/FabianFox/Webscraping-Hamburg-/blob/master/Code/TwitterExample.R)
+    
+## 5. R-Setup
+
+- benötigen [R](https://www.r-project.org/) und [RStudio](https://www.rstudio.com/products/rstudio/download/)
+- Alternative: [RStudio Cloud](https://rstudio.cloud/)
+    - derzeit kostenlos
+    - läuft über den Browser (es muss nichts installiert werden)
+    - (Einige) Beispiele können ausgeführt werden
