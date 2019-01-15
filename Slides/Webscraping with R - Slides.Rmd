@@ -81,7 +81,40 @@ King et al. ([2013](http://bit.ly/2E1Yjhc)):
 include_graphics("Figures/King et al 2013 - p335.png")
 ```
 
-Source: [King et al. (2013: 335)](http://bit.ly/2E1Yjhc)
+Quelle: [King et al. (2013: 335)](http://bit.ly/2E1Yjhc)
+
+## Lehre
+
+Studium.org ([Code](https://github.com/FabianFox/Webscraping-Hamburg-/blob/master/Code/SoziologieOrg-Scraper.R)):
+
+- Informationen zu Soziologiestudiengängen
+- z.B. Mietspiegel, Wetter, Kinos...
+
+```{r, echo = FALSE, eval = TRUE, warning = FALSE, message = FALSE}
+uni.df <- readRDS(file = "C:/Users/guelzauf/Seafile/Meine Bibliothek/Projekte/Webscraping-Hamburg-/Slides/Figures/StudiumOrg.RDS")
+
+ggplot(uni.df) +
+  geom_point(aes(fct_reorder(name, sonnenstunden_pro_jahr), sonnenstunden_pro_jahr), 
+             stat = "identity") +
+  labs(title = "Deutsche Soziologieinstitute nach Sonnenstunden im Jahr",
+       subtitle = paste0("Die Differenz zwischen Berlin und Hamburg beträgt ", 
+                         round(
+                           abs(
+                             uni.df$sonnenstunden_pro_jahr[uni.df$name == "uni-hamburg"] -
+                               uni.df$sonnenstunden_pro_jahr[uni.df$name == "hu-berlin"]) /
+                             24, 
+                           digits = 1),
+                         " Sonnentage im Jahr."),
+       x = "", y = "", caption = "Quelle: studium.org") +
+  geom_point(data = subset(uni.df, name %in% c("uni-hamburg", "hu-berlin")),
+             aes(fct_reorder(name, sonnenstunden_pro_jahr), sonnenstunden_pro_jahr), 
+             stat = "identity", color = "red", size = 4) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1), 
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.x = element_blank(),
+        axis.ticks = element_line())
+```
 
 ## Digitale Daten
 
