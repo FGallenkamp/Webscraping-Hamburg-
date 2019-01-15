@@ -59,7 +59,7 @@ poll_scraper <- function(x) {
       which(
         str_detect(
           string = .[,1], "[:digit:]+.?[:digit:]+.?[:digit:]+") == TRUE)):nrow(.),
-      c(1, which(colnames(.) %in% parties))] %>%
+      c(1, which(colnames(.) %in% parties))] %>%                                   # Columns that entail date + "parties"
     rename("Zeitpunkt" = 1) %>%
     mutate(Zeitpunkt = parse_datetime(Zeitpunkt, format = "%d.%m.%Y")) %>%
     mutate_if(is.character, str_extract, pattern = "[:digit:]+,?[:digit:]?") %>%
