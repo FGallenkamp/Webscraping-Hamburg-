@@ -59,7 +59,7 @@ in the Occupy Gezi Movement"](https://www.sociologicalscience.com/articles-v2-18
 - Törnberg & Törnberg (2016) ["Combining CDA and topic modeling: Analyzing
 discursive connections between Islamophobia and anti-feminism on an online forum"](https://journals.sagepub.com/doi/abs/10.1177/0957926516634546#articleShareContainer)
 
-## Censorship in China
+## Zensur in China I
 
 <div style="float: left; width: 50%;">
 King et al. ([2013](http://bit.ly/2E1Yjhc)):
@@ -73,6 +73,15 @@ King et al. ([2013](http://bit.ly/2E1Yjhc)):
 <div style="float: right; width: 50%;">
 ![<font size="3">Chacha: Chinesische Internetpolizei</font>](Figures/Chacha - Internet Police.png)
 </div>
+
+## Zensur in China II
+
+```{r, out.width = "100%"}
+# Source: King et al. (2013: 335)
+include_graphics("Figures/King et al 2013 - p335.png")
+```
+
+Source: [King et al. (2013: 335)](http://bit.ly/2E1Yjhc)
 
 ## Digitale Daten
 
@@ -516,7 +525,7 @@ Dynamische Webseiten & bot blocking:
 ## APIs: Steigende Relevanz
 
 ```{r echo = FALSE, eval = TRUE}
-api.plot.df <- readRDS(file = "./Figures/api_plot_df.R")
+api.plot.df <- readRDS(file = "C:/Users/guelzauf/Seafile/Meine Bibliothek/Projekte/Webscraping-Hamburg-/Slides/Figures/api_plot_df.RDS")
 
 ggplot(api.plot.df, aes(x = Submitted, y = cumulative.n)) +
   geom_line(stat = "identity") +
@@ -611,7 +620,7 @@ Weitere Beispiele:
 - statische Seiten
     - [Gründerszene.de](https://github.com/FabianFox/Webscraping-Hamburg-/blob/master/Code/GruenderszeneDe-Scraper.R)
     - [Wahlrecht.de](https://github.com/FabianFox/Webscraping-Hamburg-/blob/master/Code/WahlrechtDe-Scraper.R)
-    - [Soziologie.org](https://github.com/FabianFox/Webscraping-Hamburg-/blob/master/Code/SoziologieOrg-Scraper.R) 
+    - [Studium.org](https://github.com/FabianFox/Webscraping-Hamburg-/blob/master/Code/SoziologieOrg-Scraper.R) 
     
 - dynamische Seiten
     - [ArtFacts.net](https://github.com/FabianFox/Webscraping-Hamburg-/blob/master/Code/ArtFacts-Scraper.R)
