@@ -6,7 +6,7 @@
 # Install/load packages
 ## ---------------------------------------------------------------------- ##
 if(!require("pacman")) install.packages("pacman")
-p_load(tidyverse, RSelenium, WikipediR)
+p_load(tidyverse, RSelenium, WikipediR, rvest)
 
 # Setting up the Docker container
 ## ---------------------------------------------------------------------- ##
@@ -51,6 +51,7 @@ richter.df <- read_html(url) %>%
 
 # Now, we create a loop to extract several artists (Source: Wikipedia)
 # Package: WikipediR (API)
+# Page: https://en.wikipedia.org/wiki/Category:German_contemporary_artists
 ## ---------------------------------------------------------------------- ##
 artists.list <- pages_in_category(language = "en", project = "wikipedia", 
                                   categories = "German contemporary artists", 
@@ -94,9 +95,9 @@ for(i in seq_along(artists.vec10)){
   Sys.sleep(sample(seq(3, 5, 0.5), 1))
   
   # Get the respective URL
-  #url <- rD$getPageSource()[[1]]
+  url <- rD$getPageSource()[[1]]
   
-  artists.url[[i]] <- rD$getCurrentUrl()
+  artists.url[[i]] <- url
   
   rD$goBack()
   
@@ -113,6 +114,9 @@ extract_table <- function(url){
     html_table()
 }
 
+# Transform URLs to vector
+artists.url <- unlist(artists.url)
+
 # Loop using purrr::map
 artists.df <- map(artists.url, extract_table)
 
@@ -120,6 +124,6 @@ artists.df <- map(artists.url, extract_table)
 ## ---------------------------------------------------------------------- ##
 remDr$server$stop()
 
-# Stop Docker (again, in PowerShell)
+# Stop Docker (in PowerShell)
 # docker ps
 # docker stop NAMEOFINSTANCE
