@@ -29,6 +29,7 @@ p_load(tidyverse, rvest, knitr, httr, kableExtra, robotstxt, eurostat, lubridate
 
 - Folien sind online verfügbar: https://goo.gl/erTCX7
     - Folien im Browser öffnen
+- Beispiele auf [GitHub](https://github.com/FabianFox/Webscraping-Hamburg-)
 - Benötigte Pakete über: 
 
 ```{r echo = TRUE, eval = FALSE}
@@ -646,7 +647,7 @@ Ziel: "friendly scraping"
 - API nutzen (Sammlung unter [programmableweb.com](https://www.programmableweb.com/))
 - Seitenbetreiber kontaktieren
 
-## 5. "hands-on"-Übungen
+## 5. Weitere Beispiele und Anwendungen
 
 Weitere Beispiele:
 
